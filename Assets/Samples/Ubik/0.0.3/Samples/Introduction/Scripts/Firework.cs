@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Ubik.Samples
 {
-    public class Firework : MonoBehaviour, IUseable, INetworkObject, INetworkComponent
+    public class Firework : MonoBehaviour, IUseable, INetworkObject, INetworkComponent, IFirework
     {
         private NetworkContext conext;
 

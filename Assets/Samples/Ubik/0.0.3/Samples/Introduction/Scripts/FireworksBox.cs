@@ -1,10 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Ubik.XR;
 using UnityEngine;
 
 namespace Ubik.Samples
 {
+    public interface IFirework
+    {
+        void Attach(Hand hand);
+    }
+
+
     /// <summary>
     /// The Fireworks Box is a basic interactive object. This object uses the NetworkSpawner
     /// to create shared objects (fireworks).
@@ -40,7 +47,11 @@ namespace Ubik.Samples
 
         public void Use(Hand controller)
         {
-            NetworkSpawner.Spawn(this, FireworkPrefab).GetComponent<Firework>().Attach(controller);
+            var firework = NetworkSpawner.SpawnPersistent(this, FireworkPrefab).GetComponents<MonoBehaviour>().Where(mb => mb is IFirework).FirstOrDefault() as IFirework;
+            if (firework != null)
+            {
+                firework.Attach(controller);
+            }
         }
 
         private void Update()

@@ -2065,6 +2065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a8236d1040c2b439f6933935477a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomClient: {fileID: 7068762446378101730}
   catalogue: {fileID: 11400000, guid: e9294dc4382ae304a8ee8961eaa34805, type: 2}
 --- !u!1 &7068762446826474295
 GameObject:
