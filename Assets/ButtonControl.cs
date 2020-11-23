@@ -32,11 +32,14 @@ public class ButtonControl : MonoBehaviour, IUseable, INetworkComponent, INetwor
     public void Use(Hand controller)
     {
         owner = true;
-        
-        transform.position = transform.position + new Vector3(0, 1, 0);
+        /*        if (owner)
+                {
+                    transform.position = transform.position + new Vector3(0, 1, 0);
+                    owner = false;
+                }*/
+
         //context = NetworkScene.Register(this);
-        
-        //context.SendJson(new Message(transform));
+        transform.position = transform.position + new Vector3(0, 1, 0);
 
         //owner = false;
     }
@@ -54,6 +57,7 @@ public class ButtonControl : MonoBehaviour, IUseable, INetworkComponent, INetwor
     // Update is called once per frame
     void Update()
     {
+        //context.SendJson(new Message(transform));
         if (owner)
         {
             context.SendJson(new Message(transform));
@@ -61,11 +65,11 @@ public class ButtonControl : MonoBehaviour, IUseable, INetworkComponent, INetwor
 
         }
 
-/*        if (owner)
-        {
-            owner = false;
+        /*        if (owner)
+                {
+                    owner = false;
 
-        }*/
+                }*/
     }
     private void Awake()
     {
@@ -77,6 +81,7 @@ public class ButtonControl : MonoBehaviour, IUseable, INetworkComponent, INetwor
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
     {
+        owner = false;
         var msg = message.FromJson<Message>();
         transform.localPosition = msg.transform.position;
         transform.localRotation = msg.transform.rotation;
