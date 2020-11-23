@@ -29,6 +29,8 @@ namespace Ubik.Samples
         private void Awake()
         {
             body = GetComponent<Rigidbody>();
+            //var firework = NetworkSpawner.SpawnPersistent(this, FireworkPrefab).GetComponents<MonoBehaviour>().Where(mb => mb is IFirework).FirstOrDefault() as IFirework;
+
         }
 
         public void Grasp(Hand controller)

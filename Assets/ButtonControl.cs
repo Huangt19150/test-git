@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Ubik.Messaging;
 using Ubik.Samples;
 using Ubik.XR;
 using UnityEngine;
+
 
 public class ButtonControl : MonoBehaviour, IUseable, INetworkComponent, INetworkObject
 {
@@ -29,11 +31,12 @@ public class ButtonControl : MonoBehaviour, IUseable, INetworkComponent, INetwor
 
     public void Use(Hand controller)
     {
-        //owner = true;
+        owner = true;
+        
         transform.position = transform.position + new Vector3(0, 1, 0);
         //context = NetworkScene.Register(this);
         
-        context.SendJson(new Message(transform));
+        //context.SendJson(new Message(transform));
 
         //owner = false;
     }
@@ -41,28 +44,43 @@ public class ButtonControl : MonoBehaviour, IUseable, INetworkComponent, INetwor
     // Start is called before the first frame update
     void Start()
     {
-        //context = NetworkScene.Register(this);
+        context = NetworkScene.Register(this);
+        
+        
+
+        //print(gameObject.name);
     }
 
     // Update is called once per frame
     void Update()
     {
-       // if (owner)
-        //{
-            // Need to send multiple variables in one message
+        if (owner)
+        {
+            context.SendJson(new Message(transform));
+            //owner = false;
 
-        //}
+        }
+
+/*        if (owner)
+        {
+            owner = false;
+
+        }*/
     }
     private void Awake()
     {
         //owner = false;
         //context = NetworkScene.Register(this); 
+        //Destroy(gameObject);
+       
     }
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
     {
         var msg = message.FromJson<Message>();
         transform.localPosition = msg.transform.position;
+        transform.localRotation = msg.transform.rotation;
 
     }
+
 }

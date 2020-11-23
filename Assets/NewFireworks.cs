@@ -97,6 +97,7 @@ public class NewFireworks : MonoBehaviour, IGraspable, IUseable, INetworkCompone
     public void Use(Hand controller)
     {
         fired = true;
+        //this.Attach(controller);
     }
 
     public void UnUse(Hand controller)
